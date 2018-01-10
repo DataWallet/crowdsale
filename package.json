@@ -1,0 +1,36 @@
+{
+  "name": "datawallet",
+  "version": "1.0.0",
+  "description": "DataWallet Crowdsale and ERC20 Token",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DataWallet/crowdsale.git"
+  },
+  "engines": {
+    "node": ">=7.6"
+  },
+  "keywords": [
+    "erc20"
+  ],
+  "author": "tiero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/DataWallet/crowdsale/issues"
+  },
+  "homepage": "https://github.com/DataWallet/crowdsale#readme",
+  "dependencies": {
+    "zeppelin-solidity": "^1.5.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-as-promised": "^7.1.1",
+    "chai-bignumber": "^2.0.2"
+  }
+}
