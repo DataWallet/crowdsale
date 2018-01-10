@@ -17,7 +17,7 @@ import "zeppelin-solidity/contracts/token/BurnableToken.sol";
  *   100 000 000 == 1 * 10**8 == 1e8 == One Hundred Million datum
  *
  *   750 milions DXT (total supply) is equivalent to:
- *   75000000000000000 == 750 000 000 * 10**8 == 1e17 == Seventy Five Quadrillion datum
+ *   75000000000000000 == 750 000 000 * 10**8 == Seventy Five Quadrillion datum
  *
  *
  */
