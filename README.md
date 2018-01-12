@@ -16,10 +16,15 @@ Datawallet's ERC20 Token and Crowdsale Contract
 
 **Install dependencies**
 
-`cd crowdsale`
+`cd crowdsale`  
 `npm i `
 
 **Test**
 
 `truffle test`
+
+**Flattening**
+
+`solidity_flattener contracts/Contract.sol --solc-paths=zeppelin-solidity=$(pwd)/node_modules/zeppelin-solidity/ --output contract.sol`
+
 
