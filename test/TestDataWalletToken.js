@@ -22,12 +22,12 @@ contract('DataWalletToken', (accounts) => {
     assert.equal(await this.token.decimals.call(), 8, "8 wasn't the value of decimals")
   })
 
-  it('should have INITIAL_SUPPLY set to 750 MLN datum', async () => {
-    assert.equal(await this.token.INITIAL_SUPPLY.call(), 750000000 * (10**8), "1e17 wasn't the value of INITIAL_SUPPLY units")
+  it('should have INITIAL_SUPPLY set to 1 bilion dxt', async () => {
+    assert.equal(await this.token.INITIAL_SUPPLY.call(), 1000000000 * (10**8), "1e17 wasn't the value of INITIAL_SUPPLY units")
   })
 
-  it('should set totalSupply to 750 MLN datum', async () => {
-    assert.equal(await this.token.totalSupply.call(), 750000000 * (10**8), "1e17 wasn't the value of totalSupply units")
+  it('should set totalSupply to 1 bilion dxt', async () => {
+    assert.equal(await this.token.totalSupply.call(), 1000000000 * (10**8), "1e17 wasn't the value of totalSupply units")
   })
 
 
@@ -79,7 +79,7 @@ contract('DataWalletToken', (accounts) => {
     const { logs } = await this.token.burn(1000000000, { from: accounts[0] });
     const balance = await this.token.balanceOf(accounts[0]);
 
-    assert.equal(balance, 750000000 * (10**8) - 1000000000, 'should be the same')
+    assert.equal(balance, 1000000000 * (10**8) - 1000000000, 'should be the same')
 
     const event = logs.find(e => e.event === 'Burn');
 

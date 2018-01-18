@@ -3,8 +3,7 @@ pragma solidity ^0.4.18;
 import "zeppelin-solidity/contracts/token/PausableToken.sol";
 import "zeppelin-solidity/contracts/token/BurnableToken.sol";
 
-
-/**
+ /**
  * @title DataWallet Token
  * @dev ERC20 DataWallet Token (DXT)
  *
@@ -16,8 +15,8 @@ import "zeppelin-solidity/contracts/token/BurnableToken.sol";
  * 1 DXT is equivalent to:
  *   100 000 000 == 1 * 10**8 == 1e8 == One Hundred Million datum
  *
- *   750 milions DXT (total supply) is equivalent to:
- *   75000000000000000 == 750 000 000 * 10**8 == Seventy Five Quadrillion datum
+ * 1 Billion DXT (total supply) is equivalent to:
+ *   100000000000000000 == 1000000000 * 10**8 == 1e17 == One Hundred Quadrillion datum
  *
  *
  */
@@ -26,7 +25,7 @@ contract DataWalletToken is PausableToken, BurnableToken {
     string public constant name = "DataWallet Token";
     string public constant symbol = "DXT";
     uint8 public constant decimals = 8;
-    uint256 public constant INITIAL_SUPPLY = 750000000 * 10**uint256(decimals);
+    uint256 public constant INITIAL_SUPPLY = 1000000000 * 10**uint256(decimals);
     
     /**
     * @dev DataWalletToken Constructor
