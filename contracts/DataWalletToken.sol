@@ -36,13 +36,17 @@ contract DataWalletToken is PausableToken, BurnableToken {
         balances[msg.sender] = INITIAL_SUPPLY;
     }
 
-    function transferTokens(address beneficiary, uint256 amount) public onlyOwner returns (bool) {
-        require(amount > 0);
+    function transfer(address beneficiary, uint256 amount) public returns (bool) {
+        if (msg.sender != owner) {
+            require(!paused);
+        }
+        require(beneficiary != address(0));
+        require(amount <= balances[msg.sender]);
 
-        balances[owner] = balances[owner].sub(amount);
+        // SafeMath.sub will throw if there is not enough balance.
+        balances[msg.sender] = balances[msg.sender].sub(amount);
         balances[beneficiary] = balances[beneficiary].add(amount);
-        Transfer(owner, beneficiary, amount);
-
+        Transfer(msg.sender, beneficiary, amount);
         return true;
     }
 }
