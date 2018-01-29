@@ -268,7 +268,9 @@ contract('DataWalletCrowdsale', async ([miner, firstContributor, secondContribut
     it('the owner could finalize the crowdsale and close the vault', async () => {
       await increaseTimeTo(latestTime() + duration.days(2))
       
-      const prevBalance = web3.fromWei(web3.eth.getBalance(await this.dataWalletCrowdsale.wallet()), 'ether').toNumber()
+      const vault = Vault.at(await this.dataWalletCrowdsale.vault())
+
+      const prevBalance = web3.fromWei(web3.eth.getBalance(await vault.wallet()), 'ether').toNumber()
 
       const value = new web3.BigNumber(web3.toWei(4, 'ether'))
       await this.dataWalletCrowdsale.sendTransaction({ value, from: firstContributor })
@@ -279,13 +281,12 @@ contract('DataWalletCrowdsale', async ([miner, firstContributor, secondContribut
 
       assert.isTrue(await this.dataWalletCrowdsale.isFinalized.call())
 
-      const vault = Vault.at(await this.dataWalletCrowdsale.vault())
       const vaultState = await vault.state()
 
-      const newBalance = web3.fromWei(web3.eth.getBalance(await this.dataWalletCrowdsale.wallet()), 'ether').toNumber()
+      const newBalance = web3.fromWei(web3.eth.getBalance(await vault.wallet()), 'ether').toNumber()
 
       assert.equal(vaultState.toNumber(), 2, 'vault should be closed')
-      assert.equal(parseInt(newBalance) - parseInt(prevBalance), web3.fromWei(value, 'ether').toNumber(), 'should be equal')
+      assert.equal(newBalance - prevBalance, web3.fromWei(value, 'ether').toNumber(), 'should be equal')
     })
 
     it('should refund payers if the goal is not reached', async () => {

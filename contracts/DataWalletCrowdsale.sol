@@ -26,7 +26,6 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
     uint256 public constant WEI_TO_DATUM = 10**uint256(10);
 
 
-    address public wallet;
     RefundVault public vault;
     DataWalletToken public token;
 
@@ -41,7 +40,7 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
     mapping(address => uint256) public contribution;
     
     event WhitelistUpdate(address indexed purchaser, bool status);
-    event TokenPurchase(address indexed purchaser, address indexed beneficiary, uint256 value, uint256 amount);
+    event TokenPurchase(address indexed beneficiary, uint256 value, uint256 amount);
     event TokenRefund(address indexed refundee, uint256 amount);
 
     event Finalized();
@@ -66,7 +65,6 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
 
         vault = new RefundVault(_wallet);
         token = DataWalletToken(_token);
-        wallet = _wallet;
         startTime = _startTime;
         endTime = _endTime;
         firstDay = startTime + 1 * 1 days;
@@ -104,7 +102,7 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
         forwardFunds(weiAmount);
         //refund if the contribution exceed the cap
         if (weiToReturn > 0) {
-            msg.sender.transfer(weiToReturn);
+            beneficiary.transfer(weiToReturn);
             TokenRefund(beneficiary, weiToReturn);
         }
         //derive how many tokens
@@ -114,14 +112,9 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
         contribution[beneficiary] = contribution[beneficiary].add(weiAmount);
      
         //Trigger the event of TokenPurchase
-        TokenPurchase(
-            msg.sender,
-            beneficiary,
-            weiAmount,
-            tokens
-        );
-        token.transferTokens(beneficiary,tokens);
-        
+        TokenPurchase(beneficiary, weiAmount, tokens);
+
+        token.transfer(beneficiary, tokens); 
     }
 
     function getTokens(uint256 amount) internal constant returns (uint256) {
@@ -141,7 +134,7 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
         uint256 unsold = token.balanceOf(this);
 
         if (unsold > 0) {
-            require(token.transferTokens(msg.sender, unsold));
+            require(token.transfer(msg.sender, unsold));
         }
     }
 
@@ -159,6 +152,11 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
         require(!isFinalized);
         require(hasEnded());
 
+        //update the sate of isFinalized
+        isFinalized = true;
+        //trigger and emit the event of finalization
+        Finalized();
+
         if (goalReached()) {
             //Close the vault
             vault.close();
@@ -170,10 +168,6 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
             //else enable refunds
             vault.enableRefunds();
         }
-        //update the sate of isFinalized
-        isFinalized = true;
-        //trigger and emit the event of finalization
-        Finalized();
     } 
 
     // send ether to the fund collection wallet, the vault in this case
