@@ -8,15 +8,15 @@ import "zeppelin-solidity/contracts/token/BurnableToken.sol";
  * @dev ERC20 DataWallet Token (DXT)
  *
  * DXT Tokens are divisible by 1e8 (100,000,000) base
- * referred to as 'datum'.
+ * referred to as 'insights'.
  *
  * DXT are displayed using 8 decimal places of precision.
  *
  * 1 DXT is equivalent to:
- *   100 000 000 == 1 * 10**8 == 1e8 == One Hundred Million datum
+ *   100 000 000 == 1 * 10**8 == 1e8 == One Hundred Million insights
  *
  * 1 Billion DXT (total supply) is equivalent to:
- *   100000000000000000 == 1000000000 * 10**8 == 1e17 == One Hundred Quadrillion datum
+ *   100000000000000000 == 1000000000 * 10**8 == 1e17 == One Hundred Quadrillion insights
  *
  *
  */
