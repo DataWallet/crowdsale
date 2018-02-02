@@ -23,7 +23,7 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
     uint256 public cap;
     uint256 public goal;
     uint256 public rate;
-    uint256 public constant WEI_TO_DATUM = 10**uint256(10);
+    uint256 public constant WEI_TO_INSIGHTS = 10**uint256(10);
 
 
     address public wallet;
@@ -125,7 +125,7 @@ contract DataWalletCrowdsale is Ownable, ReentrancyGuard {
     }
 
     function getTokens(uint256 amount) internal constant returns (uint256) {
-        return amount.mul(rate).div(WEI_TO_DATUM);
+        return amount.mul(rate).div(WEI_TO_INSIGHTS);
     }
 
     // contributors can claim refund if the goal is not reached
