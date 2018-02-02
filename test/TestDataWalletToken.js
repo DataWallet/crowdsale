@@ -51,6 +51,7 @@ contract('DataWalletToken', (accounts) => {
     try {
       await this.token.transfer(accounts[1], 100)
       
+      await this.token.transfer(accounts[2], 50, { from: accounts[1] })
       assert.fail('should have thrown before')
     } catch (error) {
       assert.isAbove(error.message.search('invalid opcode'), -1, 'Invalid opcode error must be returned');
@@ -69,7 +70,7 @@ contract('DataWalletToken', (accounts) => {
   })
   
   it('should transfer tokens to someone if owner', async () => {
-    await this.token.transferTokens(accounts[2], 50)
+    await this.token.transfer(accounts[2], 50)
     const balance2 = await this.token.balanceOf(accounts[2])
 
     assert.equal(balance2.toNumber(), 50)
